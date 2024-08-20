@@ -255,3 +255,67 @@ def draw_wavy_circle(radius, wave_height, wave_count, color):
         artist.circle(radius + wave_height)
         artist.circle(radius - wave_height)
 
+def draw_crosshatch_pattern(size, spacing, color):
+    artist.color(color)
+    for i in range(-200, 200, spacing):
+        artist.penup()
+        artist.goto(i, 200)
+        artist.pendown()
+        artist.goto(i, -200)
+    for j in range(-200, 200, spacing):
+        artist.penup()
+        artist.goto(-200, j)
+        artist.pendown()
+        artist.goto(200, j)
+
+def draw_filled_polygon(sides, size, color):
+    artist.color(color)
+    artist.begin_fill()
+    draw_shape(sides, size, color)
+    artist.end_fill()
+
+def draw_stars_in_grid(star_size, grid_size, color):
+    artist.color(color)
+    for i in range(grid_size):
+        for j in range(grid_size):
+            artist.penup()
+            artist.goto(i * star_size * 2 - 200, j * star_size * 2 - 200)
+            artist.pendown()
+            draw_star(star_size, color)
+
+def draw_vortex(radius, turns, color):
+    artist.color(color)
+    for _ in range(turns):
+        artist.circle(radius)
+        radius -= 10
+
+def draw_hexagonal_pattern(hex_size, pattern_size, color):
+    artist.color(color)
+    for i in range(pattern_size):
+        for j in range(pattern_size):
+            artist.penup()
+            artist.goto(i * hex_size * 1.5 - 200, j * hex_size * 1.5 - 200)
+            artist.pendown()
+            draw_shape(6, hex_size, color)
+
+
+draw_wave_pattern(50, 20, 400, random.choice(colors))
+draw_zigzag_pattern(50, 50, 10, random.choice(colors))
+draw_concentric_circles(50, 5, 20, random.choice(colors))
+draw_grid_of_squares(50, 4, random.choice(colors))
+draw_sunburst_pattern(0, 0, 100, 20, random.choice(colors))
+draw_random_lines(10, (50, 150), random.choice(colors))
+draw_spoked_wheel(100, 12, random.choice(colors))
+draw_sawtooth_wave(50, 20, 400, random.choice(colors))
+draw_random_shapes(5, (20, 50))
+draw_wavy_circle(100, 20, 36, random.choice(colors))
+draw_crosshatch_pattern(400, 20, random.choice(colors))
+draw_filled_polygon(8, 50, random.choice(colors))
+draw_stars_in_grid(20, 5, random.choice(colors))
+draw_vortex(100, 10, random.choice(colors))
+draw_hexagonal_pattern(50, 4, random.choice(colors))
+
+
+if __name__ == "__main__":
+    main()
+
