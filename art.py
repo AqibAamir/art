@@ -84,7 +84,6 @@ def draw_checkerboard(size):
                 artist.end_fill()
     screen.tracer(1)
 
-
 def draw_circles_grid():
     screen.tracer(0)
     for i in range(-200, 200, 50):
@@ -136,10 +135,10 @@ def draw_user_selected_shape():
         artist.write("Invalid shape choice!", align="center", font=("Arial", 16, "normal"))
         return
 
-    color_choice = screen.textinput("Color Selection", f"Choose a color: {', '.join(colors)}")
+    color_choice = screen.textinput("Colour Selection", f"Choose a color: {', '.join(colors)}")
     
     if color_choice.lower() not in colors:
-        artist.write("Invalid color choice!", align="center", font=("Arial", 16, "normal"))
+        artist.write("Invalid colour choice", align="center", font=("Arial", 16, "normal"))
         return
 
     size = int(screen.numinput("Size", "Enter the size of the shape:", minval=10, maxval=200))
@@ -171,7 +170,6 @@ def draw_wave_pattern(amplitude, wavelength, length, color):
     for x in range(-length // 2, length // 2):
         y = amplitude * math.sin(x / wavelength)
         artist.goto(x, y)
-
 
 def draw_zigzag_pattern(segment_length, height, segments, color):
     artist.color(color)
@@ -318,4 +316,5 @@ draw_hexagonal_pattern(50, 4, random.choice(colors))
 
 if __name__ == "__main__":
     main()
+
 
