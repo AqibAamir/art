@@ -171,3 +171,87 @@ def draw_wave_pattern(amplitude, wavelength, length, color):
     for x in range(-length // 2, length // 2):
         y = amplitude * math.sin(x / wavelength)
         artist.goto(x, y)
+
+
+def draw_zigzag_pattern(segment_length, height, segments, color):
+    artist.color(color)
+    for _ in range(segments):
+        artist.forward(segment_length)
+        artist.right(135)
+        artist.forward(height)
+        artist.left(135)
+
+def draw_concentric_circles(radius, count, gap, color):
+    artist.color(color)
+    for i in range(count):
+        artist.circle(radius + i * gap)
+        artist.right(360 / count)
+
+def draw_grid_of_squares(size, grid_size, color):
+    artist.color(color)
+    for i in range(grid_size):
+        for j in range(grid_size):
+            artist.penup()
+            artist.goto(i * size - 200, j * size - 200)
+            artist.pendown()
+            for _ in range(4):
+                artist.forward(size)
+                artist.right(90)
+
+def draw_sunburst_pattern(center_x, center_y, ray_length, ray_count, color):
+    artist.color(color)
+    artist.penup()
+    artist.goto(center_x, center_y)
+    artist.pendown()
+    for _ in range(ray_count):
+        artist.forward(ray_length)
+        artist.backward(ray_length)
+        artist.right(360 / ray_count)
+
+def draw_random_lines(count, length_range, color):
+    artist.color(color)
+    for _ in range(count):
+        artist.penup()
+        artist.goto(random.randint(-200, 200), random.randint(-200, 200))
+        artist.pendown()
+        artist.setheading(random.randint(0, 360))
+        artist.forward(random.randint(length_range[0], length_range[1]))
+
+def draw_spoked_wheel(radius, spoke_count, color):
+    artist.color(color)
+    for _ in range(spoke_count):
+        artist.penup()
+        artist.goto(0, 0)
+        artist.pendown()
+        artist.forward(radius)
+        artist.backward(radius)
+        artist.right(360 / spoke_count)
+
+def draw_sawtooth_wave(amplitude, wavelength, length, color):
+    artist.color(color)
+    for x in range(-length // 2, length // 2, wavelength):
+        artist.goto(x, amplitude if x % (2 * wavelength) == 0 else -amplitude)
+
+def draw_random_shapes(shape_count, size_range):
+    shapes = ["square", "circle", "triangle"]
+    for _ in range(shape_count):
+        shape = random.choice(shapes)
+        size = random.randint(size_range[0], size_range[1])
+        color = random.choice(colors)
+        artist.penup()
+        artist.goto(random.randint(-200, 200), random.randint(-200, 200))
+        artist.pendown()
+        if shape == "square":
+            draw_shape(4, size, color)
+        elif shape == "circle":
+            artist.color(color)
+            artist.circle(size)
+        elif shape == "triangle":
+            draw_shape(3, size, color)
+
+def draw_wavy_circle(radius, wave_height, wave_count, color):
+    artist.color(color)
+    for _ in range(wave_count):
+        artist.circle(radius + wave_height)
+        artist.circle(radius - wave_height)
+
