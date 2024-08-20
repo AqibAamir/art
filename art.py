@@ -83,3 +83,91 @@ def draw_checkerboard(size):
             if (row + col) % 2 == 0:
                 artist.end_fill()
     screen.tracer(1)
+
+
+def draw_circles_grid():
+    screen.tracer(0)
+    for i in range(-200, 200, 50):
+        for j in range(-200, 200, 50):
+            artist.penup()
+            artist.goto(i, j)
+            artist.pendown()
+            artist.color(random.choice(colors))
+            artist.circle(20)
+    screen.tracer(1)
+
+def get_user_input():
+    pieces = int(screen.numinput("Number of Pieces", "Enter the number of art pieces:", minval=1, maxval=100))
+    return pieces
+
+def generate_art(pieces):
+    for _ in range(pieces):
+        draw_radial_pattern()
+
+def draw_radial_pattern(center_x, center_y, radius, num_shapes):
+    artist.penup()
+    artist.goto(center_x, center_y)
+    artist.pendown()
+    for i in range(num_shapes):
+        angle = 360 / num_shapes * i
+        artist.penup()
+        artist.goto(center_x, center_y)
+        artist.setheading(angle)
+        artist.forward(radius)
+        artist.pendown()
+        draw_star(random.randint(20, 40), random.choice(colors))
+
+def draw_flower_pattern():
+    for i in range(12):
+        artist.color(random.choice(colors))
+        draw_shape(6, 50, random.choice(colors))
+        artist.right(30)
+
+def draw_complex_background():
+    draw_gradient()
+    draw_checkerboard(50)
+    draw_circles_grid()
+
+def draw_user_selected_shape():
+    shapes = ["polygon", "star", "circle", "spiral"]
+    shape_choice = screen.textinput("Shape Selection", f"Choose a shape: {', '.join(shapes)}")
+    
+    if shape_choice.lower() not in shapes:
+        artist.write("Invalid shape choice!", align="center", font=("Arial", 16, "normal"))
+        return
+
+    color_choice = screen.textinput("Color Selection", f"Choose a color: {', '.join(colors)}")
+    
+    if color_choice.lower() not in colors:
+        artist.write("Invalid color choice!", align="center", font=("Arial", 16, "normal"))
+        return
+
+    size = int(screen.numinput("Size", "Enter the size of the shape:", minval=10, maxval=200))
+    
+    if shape_choice.lower() == "polygon":
+        sides = int(screen.numinput("Sides", "Enter the number of sides for the polygon:", minval=3, maxval=10))
+        draw_shape(sides, size, color_choice)
+    elif shape_choice.lower() == "star":
+        draw_star(size, color_choice)
+    elif shape_choice.lower() == "circle":
+        draw_circle_pattern(size, 12, color_choice)
+    elif shape_choice.lower() == "spiral":
+        draw_spiral(60, size, 5, 20, color_choice)
+
+def main():
+    draw_complex_background()
+    draw_user_selected_shape()
+    pieces = get_user_input()
+    generate_art(pieces)
+    draw_radial_pattern(0, 0, 100, 12)
+    draw_flower_pattern()
+    screen.exitonclick()
+
+def draw_wave_pattern(amplitude, wavelength, length, color):
+    artist.penup()
+    artist.goto(-length // 2, 0)
+    artist.pendown()
+    artist.color(color)
+    for x in range(-length // 2, length // 2):
+        y = amplitude * math.sin(x / wavelength)
+        artist.goto(x, y)
